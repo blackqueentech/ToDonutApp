@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTaskName"
+        android:text="Task Name"/>
+
+    <EditText
+        android:id="@+id/etTaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Pick up donuts"/>
+
+    <TextView
+        android:id="@+id/tvTaskNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Additional Notes"/>
+
+    <EditText
+        android:id="@+id/etTaskNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Don't forget the jelly filled ones!"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Task"
+        android:id="@+id/btnAddTask"/>
+
+</LinearLayout>
