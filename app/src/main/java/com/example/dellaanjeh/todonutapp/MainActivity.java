@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddtoList;
     TextView tvEmptyList;
     DBHelper dh;
-    TodoTaskListAdapter adapter;
+    public TodoTaskListAdapter adapter;
     SharedPreferences sp;
     FragmentManager fm = getSupportFragmentManager();
 
@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AddToListDialog dialog = new AddToListDialog();
                 //dialog.setContentView(R.layout.add_to_list_dialog);
+                //dialog.
                 dialog.show(fm, "New Task");
+
             }
         });
+
+        adapter.notifyDataSetChanged();
     }
 }

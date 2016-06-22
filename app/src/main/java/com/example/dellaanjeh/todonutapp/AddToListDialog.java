@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class AddToListDialog extends DialogFragment {
     EditText etTaskName, etTaskNotes;
     Button btnAddTask;
     DBHelper dbHelper;
+    ListView lvTodotasks;
+    ArrayList<TodoTaskItems> todoList;
+    TodoTaskListAdapter adapter;
 
 
     @Override
@@ -32,11 +36,15 @@ public class AddToListDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.add_to_list_dialog, container,
                 false);
+        View mainView = inflater.inflate(R.layout.activity_main, container, false);
         getDialog().setTitle("Create a New Task");
+        lvTodotasks = (ListView) mainView.findViewById(R.id.lvTodotasks);
         tvTaskName = (TextView) rootView.findViewById(R.id.tvTaskName);
         etTaskName = (EditText) rootView.findViewById(R.id.etTaskName);
         tvTaskNotes = (TextView) rootView.findViewById(R.id.tvTaskNotes);
         etTaskNotes = (EditText) rootView.findViewById(R.id.etTaskNotes);
+        //adapter = new TodoTaskListAdapter(MainActivity(), todoList);
+        //lvTodotasks.setAdapter(adapter);
         dbHelper = new DBHelper(getActivity());
         btnAddTask = (Button) rootView.findViewById(R.id.btnAddTask);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -48,9 +56,8 @@ public class AddToListDialog extends DialogFragment {
                 String status = "not completed";
                 String duedate = "today";
                 dbHelper.addTask(name, duedate, notes, status);
-                //showList();
-//                etName.setText("");
-//                etPhone.setText("");
+                AddToListDialog.this.dismiss();
+                //adapter.notifyDataSetChanged();
             }
         });
         return rootView;
