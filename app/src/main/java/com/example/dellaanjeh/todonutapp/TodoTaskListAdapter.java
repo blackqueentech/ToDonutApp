@@ -1,6 +1,7 @@
 package com.example.dellaanjeh.todonutapp;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dellaanjeh on 6/19/16.
@@ -51,6 +53,9 @@ public class TodoTaskListAdapter extends BaseAdapter {
         TextView tvDueDate = (TextView) convertView.findViewById(R.id.tvDate);
         tvDueDate.setText(item.getDueDate());
 
+        if (item.getStatus() == "Completed") {
+            tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
 
         return convertView;
     }

@@ -1,5 +1,6 @@
 package com.example.dellaanjeh.todonutapp;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -7,12 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -22,13 +27,15 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class AddToListDialog extends DialogFragment {
 
     SQLHandler handler;
-    TextView tvTaskName, tvTaskNotes, tvStatus;
-    EditText etTaskName, etTaskNotes;
+    TextView tvTaskName, tvTaskNotes, tvStatus, tvDueDate;
+    EditText etTaskName, etTaskNotes, etDueDate;
     Button btnAddTask;
     DBHelper dbHelper;
     ListView lvTodotasks;
     Spinner spStatus;
     String[] statuses;
+    DatePickerDialog dueDatePicker;
+    SimpleDateFormat dateFormat;
     ArrayAdapter<String> statusAdapter;
     ArrayList<TodoTaskItems> todoList;
     TodoTaskListAdapter adapter;
@@ -45,6 +52,27 @@ public class AddToListDialog extends DialogFragment {
         lvTodotasks = (ListView) mainView.findViewById(R.id.lvTodotasks);
         tvTaskName = (TextView) rootView.findViewById(R.id.tvTaskName);
         etTaskName = (EditText) rootView.findViewById(R.id.etTaskName);
+
+        tvDueDate = (TextView) rootView.findViewById(R.id.tvDueDate);
+        etDueDate = (EditText) rootView.findViewById(R.id.etDueDate);
+        etDueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                dueDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        etDueDate.setText(dateFormat.format(newDate.getTime()));
+                    }
+
+                },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                dueDatePicker.show();
+            }
+        });
+        dateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+
         tvTaskNotes = (TextView) rootView.findViewById(R.id.tvTaskNotes);
         etTaskNotes = (EditText) rootView.findViewById(R.id.etTaskNotes);
         tvStatus = (TextView) rootView.findViewById(R.id.tvStatus);
@@ -65,7 +93,7 @@ public class AddToListDialog extends DialogFragment {
                 String name = etTaskName.getText().toString();
                 String notes = etTaskNotes.getText().toString();
                 String status = String.valueOf(spStatus.getSelectedItem());
-                String duedate = "today";
+                String duedate = etDueDate.getText().toString();
                 addListenerOnSpinnerItemSelection();
                 dbHelper.addTask(name, duedate, notes, status);
                 AddToListDialog.this.dismiss();
