@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         sqlHandler = new SQLHandler(this);
         dh = new DBHelper(this);
         todoList = dh.getAllTasks();
+        // TODO: This isn't initializing even with seemingly correct parameters...
         adapter = new TodoTaskListAdapter(MainActivity.this, todoList);
         lvTodotasks.setAdapter(adapter);
         lvTodotasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
