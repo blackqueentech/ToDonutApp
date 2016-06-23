@@ -21,7 +21,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     TextView tvTaskNameLabel, tvDueDateLabel, tvTaskNotesLabel, tvStatusLabel;
     TextView tvTaskName, tvDueDate, tvTaskNotes, tvStatus;
     String taskName, dueDate, status, notes;
-    Button btnDelete, btnEdit;
+    Button btnDelete, btnEdit, btnBack;
     DBHelper helper;
     TodoTaskListAdapter adapter;
     TodoTaskItems item;
@@ -95,6 +95,20 @@ public class TaskDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TaskDetailsActivity.this, EditTaskActivity.class);
+                intent.putExtra("EXTRA_ID", id);
+                intent.putExtra("EXTRA_NAME", taskName);
+                intent.putExtra("EXTRA_DUE_DATE", dueDate);
+                intent.putExtra("EXTRA_STATUS", status);
+                intent.putExtra("EXTRA_NOTES", notes);
+                startActivity(intent);
+            }
+        });
+
+        btnBack = (Button) findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskDetailsActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

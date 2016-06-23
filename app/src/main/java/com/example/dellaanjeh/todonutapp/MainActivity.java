@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,5 +83,6 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
         // created a setter to replace the list w all tasks since
         // base adapter doesn't have a cursor to track changes with
         adapter.setTodoList(dh.getAllTasks());
+        Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
     }
 }
