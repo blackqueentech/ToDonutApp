@@ -31,7 +31,7 @@ public class TodoTaskListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return todoList.get(position);
     }
 
     @Override
@@ -58,5 +58,10 @@ public class TodoTaskListAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public void setTodoList(ArrayList<TodoTaskItems> todoList) {
+        this.todoList = todoList;
+        notifyDataSetChanged();
     }
 }

@@ -40,6 +40,9 @@ public class AddToListDialog extends DialogFragment {
     ArrayList<TodoTaskItems> todoList;
     TodoTaskListAdapter adapter;
 
+    //we need a listener for the add action!
+    AddToListListener listener;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,6 +99,8 @@ public class AddToListDialog extends DialogFragment {
                 String duedate = etDueDate.getText().toString();
                 addListenerOnSpinnerItemSelection();
                 dbHelper.addTask(name, duedate, notes, status);
+                //prompt the adapter to refresh
+                listener.onItemAdded();
                 AddToListDialog.this.dismiss();
                 // TODO: get list to update upon existing dialog
                 //adapter.notifyDataSetChanged();
@@ -104,8 +109,19 @@ public class AddToListDialog extends DialogFragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //the listener is just the main activity
+        listener = (MainActivity)getActivity();
+    }
+
     // I may not need this...
     public void addListenerOnSpinnerItemSelection(){
         spStatus.setOnItemSelectedListener(new CustomOnStatusSelectedListener());
+    }
+
+    interface AddToListListener{
+        public void onItemAdded();
     }
 }

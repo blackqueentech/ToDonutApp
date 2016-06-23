@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,12 +18,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddToListDialog.AddToListListener {
 
     SQLHandler sqlHandler;
     ListView lvTodotasks;
-    List<TodoTaskItems> todoList;
-    ArrayAdapter<TodoTaskItems> adapter;
+    ArrayList<TodoTaskItems> todoList;
+    TodoTaskListAdapter adapter;
     Button btnAddtoList;
     TextView tvEmptyList;
     DBHelper dh;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         lvTodotasks = (ListView) findViewById(R.id.lvTodotasks);
         tvEmptyList = (TextView) findViewById(R.id.tvEmptyList);
+
+        //set the empty view!
+        lvTodotasks.setEmptyView(tvEmptyList);
+
         btnAddtoList = (Button) findViewById(R.id.btnAddtoList);
         sqlHandler = new SQLHandler(this);
         dh = new DBHelper(this);
@@ -46,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-                TodoTaskItems task = adapter.getItem(position);
+                TodoTaskItems task = (TodoTaskItems) adapter.getItem(position);
                 intent.putExtra("EXTRA_NAME", task.getTaskName());
                 intent.putExtra("EXTRA_DUE_DATE", task.getDueDate());
                 intent.putExtra("EXTRA_STATUS", task.getStatus());
@@ -54,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         btnAddtoList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +74,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_add){
+            AddToListDialog dialog = new AddToListDialog();
+            dialog.show(fm, "New Task");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemAdded() {
+        // created a setter to replace the list w all tasks since
+        // base adapter doesn't have a cursor to track changes with
+        adapter.setTodoList(dh.getAllTasks());
     }
 }
