@@ -24,10 +24,8 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
     ListView lvTodotasks;
     ArrayList<TodoTaskItems> todoList;
     TodoTaskListAdapter adapter;
-    Button btnAddtoList;
     TextView tvEmptyList;
     DBHelper dh;
-    public TodoTaskListAdapter ttladapter;
     SharedPreferences sp;
     FragmentManager fm = getSupportFragmentManager();
 
@@ -41,12 +39,9 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
 
         //set the empty view!
         lvTodotasks.setEmptyView(tvEmptyList);
-
-        btnAddtoList = (Button) findViewById(R.id.btnAddtoList);
         sqlHandler = new SQLHandler(this);
         dh = new DBHelper(this);
         todoList = dh.getAllTasks();
-        // TODO: This isn't initializing even with seemingly correct parameters...
         adapter = new TodoTaskListAdapter(MainActivity.this, todoList);
         lvTodotasks.setAdapter(adapter);
         lvTodotasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,23 +49,12 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
                 TodoTaskItems task = (TodoTaskItems) adapter.getItem(position);
+                intent.putExtra("EXTRA_ID", task.getId());
                 intent.putExtra("EXTRA_NAME", task.getTaskName());
                 intent.putExtra("EXTRA_DUE_DATE", task.getDueDate());
                 intent.putExtra("EXTRA_STATUS", task.getStatus());
                 intent.putExtra("EXTRA_NOTES", task.getTaskNotes());
                 startActivity(intent);
-            }
-        });
-
-
-        btnAddtoList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddToListDialog dialog = new AddToListDialog();
-                //dialog.setContentView(R.layout.add_to_list_dialog);
-                //dialog.
-                dialog.show(fm, "New Task");
-
             }
         });
 

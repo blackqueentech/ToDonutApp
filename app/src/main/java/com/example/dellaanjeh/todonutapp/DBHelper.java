@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ToDo";
     private static final String DATABASE_TABLE_NAME = "Tasks";
-    public static final String COLUMN1 = "Task_ID";
+    //public static final String COLUMN1 = "Task_ID";
     public static final String COLUMN2 = "Task_Name";
     public static final String COLUMN3 = "Due_Date";
     public static final String COLUMN4 = "Notes";
@@ -31,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + DATABASE_TABLE_NAME + " (" + COLUMN1
+        db.execSQL("CREATE TABLE " + DATABASE_TABLE_NAME + " (" + "_id INTEGER PRIMARY KEY"
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN2 + " TEXT, " + COLUMN3 + " TEXT, " + COLUMN4 + " TEXT, " + COLUMN5 + " TEXT)");
 
     }
@@ -74,9 +74,11 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 TodoTaskItems task = new TodoTaskItems();
 
-                task.id = cursor.getInt(cursor.getColumnIndex(COLUMN1));
-
+                task.id = cursor.getInt(cursor.getColumnIndex("_id"));
                 task.taskName = cursor.getString(cursor.getColumnIndex(COLUMN2));
+                task.dueDate = cursor.getString(cursor.getColumnIndex(COLUMN3));
+                task.taskNotes = cursor.getString(cursor.getColumnIndex(COLUMN4));
+                task.status = cursor.getString(cursor.getColumnIndex(COLUMN5));
 
                 todoList.add(task);
             } while (cursor.moveToNext());
@@ -94,7 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String string = String.valueOf(id);
-        db.execSQL("DELETE FROM " + DATABASE_TABLE_NAME + " WHERE " + COLUMN1
+        db.execSQL("DELETE FROM " + DATABASE_TABLE_NAME + " WHERE " + "_id"
                 + "=" + id + "");
     }
 

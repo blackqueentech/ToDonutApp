@@ -7,4 +7,30 @@
         android:icon="@drawable/add"
         app:showAsAction="always"
         android:title="Add"/>
+
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/save"
+        app:showAsAction="always"
+        android:title="Save"/>
+
+    <item android:id="@+id/action_edit"
+        android:icon="@drawable/edit"
+        app:showAsAction="always"
+        android:title="Edit"/>
+
+    <item android:id="@+id/action_delete"
+        android:icon="@drawable/trash"
+        app:showAsAction="always"
+        android:title="Delete"/>
+
+    <item android:id="@+id/action_email"
+        android:icon="@drawable/email"
+        app:showAsAction="always"
+        android:title="Email"/>
+
+    <item android:id="@+id/action_close"
+        android:icon="@drawable/xmark"
+        app:showAsAction="always"
+        android:title="Close"/>
+
 </menu>
