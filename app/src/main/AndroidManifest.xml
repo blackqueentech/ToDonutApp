@@ -8,15 +8,17 @@
         android:label="ToDonut"
         android:supportsRtl="true"
         android:theme="@style/ToDonutTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".TaskDetailsActivity" />
+        <activity android:name=".EditTaskActivity" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskDetailsActivity" />
-        <activity android:name=".EditTaskActivity"></activity>
     </application>
 
 </manifest>
