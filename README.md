@@ -1,4 +1,4 @@
-# ![ToDonutApp](media/icon.png)
+# ![ToDonutApp](media/logo.png)
 Donut forget what to do!
 
 *Prework for Codepath's Android Bootcamp Application*
