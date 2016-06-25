@@ -48,62 +48,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         tvTaskNotes = (TextView) findViewById(R.id.tvTaskNotes);
         adapter = new TodoTaskListAdapter(TaskDetailsActivity.this, todoList);
         helper = new DBHelper(this);
-        btnDelete = (Button) findViewById(R.id.btnDelete);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(context);
-                View view = li.inflate(R.layout.delete_dialog, null);
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        context);
-
-                // set prompts.xml to alertdialog builder
-                alertDialogBuilder.setView(view);
-
-                final TextView message = (TextView) view
-                        .findViewById(R.id.tvDeleteMessage);
-
-                // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("Yes",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        Log.d(Integer.toString(taskId), "task ID");
-                                        helper.deleteTask(taskId);
-                                        TaskDetailsActivity.this.finish();
-                                        Toast.makeText(getBaseContext(), "Task deleted!", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                        .setNegativeButton("No",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-        });
-
-        btnEdit = (Button) findViewById(R.id.btnEdit);
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TaskDetailsActivity.this, EditTaskActivity.class);
-                intent.putExtra("EXTRA_ID", taskId);
-                intent.putExtra("EXTRA_NAME", taskName);
-                intent.putExtra("EXTRA_DUE_DATE", dueDate);
-                intent.putExtra("EXTRA_STATUS", status);
-                intent.putExtra("EXTRA_NOTES", notes);
-                startActivityForResult(intent,EDIT_REQUEST);
-            }
-        });
 
         btnBack = (Button) findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +85,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
                     context);
 
             // set prompts.xml to alertdialog builder
-            alertDialogBuilder.setView(view);
+           // alertDialogBuilder.setView(view);
 
             final TextView message = (TextView) view
                     .findViewById(R.id.tvDeleteMessage);
@@ -167,6 +111,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
 
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.setTitle("Are you sure you want to delete this task?");
 
             // show it
             alertDialog.show();

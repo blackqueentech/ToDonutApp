@@ -16,7 +16,7 @@
         <item name="android:textColorPrimary">@color/primary_text</item>
         <item name="android:textColorSecondary">@color/secondary_text</item>
         <item name="android:colorBackground">@color/bright_foreground_material_dark</item>
-        <item name="android:colorForeground">@color/button_material_dark</item>
+        <item name="android:colorForeground">@color/bright_foreground_material_dark</item>
         <item name="android:textColorSecondaryInverse">
             @color/abc_background_cache_hint_selector_material_dark
         </item>

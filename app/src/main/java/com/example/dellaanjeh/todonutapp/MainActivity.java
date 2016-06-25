@@ -1,10 +1,12 @@
 package com.example.dellaanjeh.todonutapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,19 +32,21 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
     TodoTaskListAdapter adapter;
     TextView tvEmptyList;
     DBHelper dh;
-    SharedPreferences sp;
+    Button btnAddtoList;
+    ImageView ivSadFace;
     FragmentManager fm = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View emptyView = inflater.inflate(R.layout.empty_list, null);
 
         lvTodotasks = (ListView) findViewById(R.id.lvTodotasks);
-        tvEmptyList = (TextView) findViewById(R.id.tvEmptyList);
 
-        //set the empty view!
-        lvTodotasks.setEmptyView(tvEmptyList);
+
+
         sqlHandler = new SQLHandler(this);
         dh = new DBHelper(this);
         todoList = dh.getAllTasks();
@@ -59,6 +65,20 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
                 startActivityForResult(intent,DETAILS_ACTIVITY);
             }
         });
+
+        //set the empty view!
+        ivSadFace = (ImageView) emptyView.findViewById(R.id.ivSadFace);
+        tvEmptyList = (TextView) emptyView.findViewById(R.id.tvEmptyList);
+        btnAddtoList = (Button) emptyView.findViewById(R.id.btnAddtoList);
+        btnAddtoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddToListDialog dialog = new AddToListDialog();
+                dialog.show(fm, "New Task");
+            }
+        });
+
+        lvTodotasks.setEmptyView(emptyView);
 
     }
 

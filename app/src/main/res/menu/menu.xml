@@ -8,9 +8,5 @@
         app:showAsAction="always"
         android:title="Add"/>
 
-    <item android:id="@+id/action_back"
-        android:icon="@drawable/list"
-        app:showAsAction="always"
-        android:title="BackToList"/>
 
 </menu>

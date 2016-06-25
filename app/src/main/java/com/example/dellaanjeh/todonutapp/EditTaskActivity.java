@@ -90,43 +90,19 @@ public class EditTaskActivity extends AppCompatActivity {
         spStatus.setSelection(getIndex(spStatus, status));
         spStatus.setAdapter(statusAdapter);
         dbHelper = new DBHelper(this);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //add to list
-                String name = etTaskName.getText().toString();
-                String notes = etTaskNotes.getText().toString();
-                String status = String.valueOf(spStatus.getSelectedItem());
-                String duedate = etDueDate.getText().toString();
-                dbHelper.editTask(id,name, duedate, notes, status);
-//                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
-//                intent.putExtra("EXTRA_NAME", name);
-//                intent.putExtra("EXTRA_DUE_DATE", duedate);
-//                intent.putExtra("EXTRA_STATUS", status);
-//                intent.putExtra("EXTRA_NOTES", notes);
-//                startActivity(intent);
-                //use finish instead!
-                setResult(Activity.RESULT_OK);
-                EditTaskActivity.this.finish();
-                Toast.makeText(getBaseContext(), "Task has been updated!", Toast.LENGTH_SHORT).show();
-                //prompt the adapter to refresh;
-                //adapter.notifyDataSetChanged();
-            }
-        });
 
         btnCancel = (Button) findViewById(R.id.btnCancel);
-//        btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //use finish instead!
-//
-//                setResult(Activity.RESULT_CANCELED);
-//                EditTaskActivity.this.finish();
-////                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
-////                startActivity(intent);
-//            }
-//        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //use finish instead!
+
+                setResult(Activity.RESULT_CANCELED);
+                EditTaskActivity.this.finish();
+//                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
+//                startActivity(intent);
+            }
+        });
 
 
 

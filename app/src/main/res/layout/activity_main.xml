@@ -16,20 +16,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nothing to do!"
-            android:textSize="20dp"
-            android:id="@+id/tvEmptyList"
-            android:gravity="center_horizontal"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add to List"
-            android:id="@+id/btnAddtoList"
-            android:gravity="center_horizontal"/>
 
         <ListView
             android:id="@+id/lvTodotasks"

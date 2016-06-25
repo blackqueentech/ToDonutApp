@@ -6,11 +6,6 @@
         app:showAsAction="always"
         android:title="Save"/>
 
-    <item android:id="@+id/action_close"
-        android:icon="@drawable/xmark"
-        app:showAsAction="always"
-        android:title="Close"/>
-
     <item android:id="@+id/action_back"
         android:icon="@drawable/list"
         app:showAsAction="always"

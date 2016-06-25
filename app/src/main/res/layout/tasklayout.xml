@@ -6,13 +6,15 @@
     android:layout_weight="1"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:paddingTop="5dp" >
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/tvTaskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_weight="0.25"
         android:textSize="20sp" />
     
     <TextView

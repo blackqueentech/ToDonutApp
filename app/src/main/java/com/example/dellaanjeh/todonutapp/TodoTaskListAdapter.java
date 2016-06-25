@@ -53,7 +53,7 @@ public class TodoTaskListAdapter extends BaseAdapter {
         TextView tvDueDate = (TextView) convertView.findViewById(R.id.tvDate);
         tvDueDate.setText(item.getDueDate());
 
-        if (item.getStatus() == "Completed") {
+        if (item.getStatus().equals("Completed")) {
             tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
