@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +26,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
     TextView tvTaskNameLabel, tvDueDateLabel, tvTaskNotesLabel, tvStatusLabel;
     TextView tvTaskName, tvDueDate, tvTaskNotes, tvStatus;
     String taskName, dueDate, status, notes;
-    Button btnDelete, btnEdit, btnBack;
     DBHelper helper;
     TodoTaskListAdapter adapter;
     TodoTaskItems item;
@@ -49,15 +49,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         adapter = new TodoTaskListAdapter(TaskDetailsActivity.this, todoList);
         helper = new DBHelper(this);
 
-        btnBack = (Button) findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(TaskDetailsActivity.this, MainActivity.class);
-//                startActivity(intent);
-                TaskDetailsActivity.this.finish();
-            }
-        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -81,8 +72,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
             LayoutInflater li = LayoutInflater.from(context);
             View view = li.inflate(R.layout.delete_dialog, null);
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    context);
+
+            ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.ToDonutDialog);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctw);
 
             // set prompts.xml to alertdialog builder
            // alertDialogBuilder.setView(view);
@@ -124,6 +116,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
             intent.putExtra("EXTRA_STATUS", status);
             intent.putExtra("EXTRA_NOTES", notes);
             startActivityForResult(intent,EDIT_REQUEST);
+        } else if(item.getItemId() == R.id.action_back) {
+            TaskDetailsActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

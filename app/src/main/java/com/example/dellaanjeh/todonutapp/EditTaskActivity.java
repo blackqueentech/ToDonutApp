@@ -30,7 +30,6 @@ public class EditTaskActivity extends AppCompatActivity {
     EditText etTaskName, etTaskNotes, etDueDate;
     String taskName, dueDate, status, notes;
     Integer id;
-    Button btnSave, btnCancel;
     DBHelper dbHelper;
     Spinner spStatus;
     String[] statuses;
@@ -90,22 +89,6 @@ public class EditTaskActivity extends AppCompatActivity {
         spStatus.setSelection(getIndex(spStatus, status));
         spStatus.setAdapter(statusAdapter);
         dbHelper = new DBHelper(this);
-
-        btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //use finish instead!
-
-                setResult(Activity.RESULT_CANCELED);
-                EditTaskActivity.this.finish();
-//                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
-//                startActivity(intent);
-            }
-        });
-
-
-
     }
 
     private int getIndex(Spinner spinner, String myString) {

@@ -3,23 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgdonut"
-    tools:context=".SplashActivity">
+    android:layout_gravity="center"
+    android:background="@drawable/splash"
+    tools:context="com.example.dellaanjeh.todonutapp.SplashActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tvTitle"
-        android:text=" forget what to do!"
-        android:textColor="#ffffff"
-        android:textSize="20dp"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="360dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvDonut"
-        android:text="Donut"
-        android:textColor="#ffffff"
-        android:textSize="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDonut"
+            android:text="Donut"
+            android:layout_weight="0.25"
+            android:textColor="#ffffff"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTitle"
+            android:layout_gravity="right"
+            android:text=" forget what to do!"
+            android:textColor="#ffffff"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
 
 </FrameLayout>

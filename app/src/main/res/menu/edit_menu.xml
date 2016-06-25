@@ -7,7 +7,7 @@
         android:title="Save"/>
 
     <item android:id="@+id/action_back"
-        android:icon="@drawable/list"
+        android:icon="@drawable/xmark"
         app:showAsAction="always"
         android:title="BackToList"/>
 </menu>

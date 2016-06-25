@@ -1,8 +1,10 @@
 package com.example.dellaanjeh.todonutapp;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +64,7 @@ public class AddToListDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                dueDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                dueDatePicker = dueDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -70,7 +72,7 @@ public class AddToListDialog extends DialogFragment {
                         etDueDate.setText(dateFormat.format(newDate.getTime()));
                     }
 
-                },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 dueDatePicker.show();
             }
         });

@@ -2,6 +2,7 @@ package com.example.dellaanjeh.todonutapp;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class TodoTaskListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.tasklayout, null);
 
         }
+
         TextView tvTaskName = (TextView) convertView.findViewById(R.id.tvTaskName);
         tvTaskName.setText(item.getTaskName());
         TextView tvDueDate = (TextView) convertView.findViewById(R.id.tvDate);
