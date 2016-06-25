@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
 
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -9,12 +9,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ToDonutTheme" parent="AppTheme" >
+    <style name="ToDonutTheme" parent="Theme.AppCompat.Light" >
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/primary_text</item>
         <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:colorBackground">@color/bright_foreground_material_dark</item>
+        <item name="android:colorForeground">@color/button_material_dark</item>
+        <item name="android:textColorSecondaryInverse">
+            @color/abc_background_cache_hint_selector_material_dark
+        </item>
     </style>
 
 
