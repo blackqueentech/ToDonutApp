@@ -1,9 +1,14 @@
 package com.example.dellaanjeh.todonutapp;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -94,13 +99,16 @@ public class EditTaskActivity extends AppCompatActivity {
                 String notes = etTaskNotes.getText().toString();
                 String status = String.valueOf(spStatus.getSelectedItem());
                 String duedate = etDueDate.getText().toString();
-                dbHelper.editTask(name, duedate, notes, status);
-                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
-                intent.putExtra("EXTRA_NAME", name);
-                intent.putExtra("EXTRA_DUE_DATE", duedate);
-                intent.putExtra("EXTRA_STATUS", status);
-                intent.putExtra("EXTRA_NOTES", notes);
-                startActivity(intent);
+                dbHelper.editTask(id,name, duedate, notes, status);
+//                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
+//                intent.putExtra("EXTRA_NAME", name);
+//                intent.putExtra("EXTRA_DUE_DATE", duedate);
+//                intent.putExtra("EXTRA_STATUS", status);
+//                intent.putExtra("EXTRA_NOTES", notes);
+//                startActivity(intent);
+                //use finish instead!
+                setResult(Activity.RESULT_OK);
+                EditTaskActivity.this.finish();
                 Toast.makeText(getBaseContext(), "Task has been updated!", Toast.LENGTH_SHORT).show();
                 //prompt the adapter to refresh;
                 //adapter.notifyDataSetChanged();
@@ -108,13 +116,17 @@ public class EditTaskActivity extends AppCompatActivity {
         });
 
         btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //use finish instead!
+//
+//                setResult(Activity.RESULT_CANCELED);
+//                EditTaskActivity.this.finish();
+////                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
+////                startActivity(intent);
+//            }
+//        });
 
 
 
@@ -131,5 +143,36 @@ public class EditTaskActivity extends AppCompatActivity {
         return index;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_save){
+            // dialog and then remove task from list
+            String name = etTaskName.getText().toString();
+            String notes = etTaskNotes.getText().toString();
+            String status = String.valueOf(spStatus.getSelectedItem());
+            String duedate = etDueDate.getText().toString();
+            dbHelper.editTask(id,name, duedate, notes, status);
+//                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
+//                intent.putExtra("EXTRA_NAME", name);
+//                intent.putExtra("EXTRA_DUE_DATE", duedate);
+//                intent.putExtra("EXTRA_STATUS", status);
+//                intent.putExtra("EXTRA_NOTES", notes);
+//                startActivity(intent);
+            //use finish instead!
+            setResult(Activity.RESULT_OK);
+            EditTaskActivity.this.finish();
+            Toast.makeText(getBaseContext(), "Task has been updated!", Toast.LENGTH_SHORT).show();
+        } else if(item.getItemId() == R.id.action_back) {
+            setResult(Activity.RESULT_CANCELED);
+            EditTaskActivity.this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

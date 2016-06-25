@@ -21,6 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AddToListDialog.AddToListListener {
 
+    private static final int DETAILS_ACTIVITY = 321;
     SQLHandler sqlHandler;
     ListView lvTodotasks;
     ArrayList<TodoTaskItems> todoList;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
                 intent.putExtra("EXTRA_DUE_DATE", task.getDueDate());
                 intent.putExtra("EXTRA_STATUS", task.getStatus());
                 intent.putExtra("EXTRA_NOTES", task.getTaskNotes());
-                startActivity(intent);
+                startActivityForResult(intent,DETAILS_ACTIVITY);
             }
         });
 
@@ -84,5 +85,11 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
         // base adapter doesn't have a cursor to track changes with
         adapter.setTodoList(dh.getAllTasks());
         Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        adapter.setTodoList(dh.getAllTasks());
     }
 }

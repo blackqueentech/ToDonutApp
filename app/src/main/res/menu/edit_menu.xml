@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item android:id="@+id/action_add"
-        android:icon="@drawable/add"
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/save"
         app:showAsAction="always"
-        android:title="Add"/>
+        android:title="Save"/>
+
+    <item android:id="@+id/action_close"
+        android:icon="@drawable/xmark"
+        app:showAsAction="always"
+        android:title="Close"/>
 
     <item android:id="@+id/action_back"
         android:icon="@drawable/list"
         app:showAsAction="always"
         android:title="BackToList"/>
-
 </menu>

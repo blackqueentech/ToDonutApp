@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DATABASE_TABLE_NAME + " (" + COLUMN1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                 + COLUMN2 + " TEXT, " + COLUMN3 + " TEXT, " + COLUMN4 + " TEXT, " + COLUMN5 + " TEXT)");
+                + COLUMN2 + " TEXT, " + COLUMN3 + " TEXT, " + COLUMN4 + " TEXT, " + COLUMN5 + " TEXT)");
 
     }
 
@@ -61,16 +62,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(DATABASE_TABLE_NAME, null, cv);
     }
 
-    public long editTask(String name, String dueDate, String notes, String status) {
+    public long editTask(Integer id, String name, String dueDate, String notes, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN2, name);
         cv.put(COLUMN3, dueDate);
         cv.put(COLUMN4, notes);
         cv.put(COLUMN5, status);
-
         // I'm scared of the nulls here too.
-        return db.update(DATABASE_TABLE_NAME, cv, null, null);
+        return db.update(DATABASE_TABLE_NAME, cv, COLUMN1 + "=?", new String[]{id.toString()});
     }
 
     /**
@@ -102,6 +102,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return todoList;
     }
 
+    public TodoTaskItems getTask(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(DATABASE_TABLE_NAME, new String[]{COLUMN1, COLUMN2, COLUMN3, COLUMN4, COLUMN5}, COLUMN1 + "=?", new String[]{"" + id},null,null,null,null);
+        if(cursor.moveToFirst()){
+            TodoTaskItems task = new TodoTaskItems();
+            task.id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN1));
+            task.taskName = cursor.getString(cursor.getColumnIndex(COLUMN2));
+            task.dueDate = cursor.getString(cursor.getColumnIndex(COLUMN3));
+            task.taskNotes = cursor.getString(cursor.getColumnIndex(COLUMN4));
+            task.status = cursor.getString(cursor.getColumnIndex(COLUMN5));
+            return task;
+        }else{
+            return null;
+        }
+    }
     /*
      * //This method deletes a record from the database.
      */
@@ -109,8 +125,10 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String string = String.valueOf(id);
-        db.execSQL("DELETE FROM " + DATABASE_TABLE_NAME + " WHERE " + COLUMN1
-                + "=" + string + "");
+        int delete = db.delete(DATABASE_TABLE_NAME, COLUMN1 + "=?", new String[]{string});
+        Log.i("Q","Deleted " + delete);
+//        db.execSQL("DELETE FROM " + DATABASE_TABLE_NAME + " WHERE " + COLUMN1
+//                + "=" + string + "");
     }
 
 }

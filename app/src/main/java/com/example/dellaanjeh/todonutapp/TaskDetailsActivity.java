@@ -8,16 +8,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class TaskDetailsActivity extends AppCompatActivity {
 
+    private static final int EDIT_REQUEST = 123;
     TextView tvTaskNameLabel, tvDueDateLabel, tvTaskNotesLabel, tvStatusLabel;
     TextView tvTaskName, tvDueDate, tvTaskNotes, tvStatus;
     String taskName, dueDate, status, notes;
@@ -26,7 +30,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     TodoTaskListAdapter adapter;
     TodoTaskItems item;
     ArrayList<TodoTaskItems> todoList;
-    Integer id;
+    Integer taskId;
     final Context context = this;
 
     @Override
@@ -66,13 +70,10 @@ public class TaskDetailsActivity extends AppCompatActivity {
                         .setPositiveButton("Yes",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
-                                        // delete item from list
-                                        Log.d(Integer.toString(id), "task ID");
-                                        helper.deleteTask(id);
-                                        adapter.notifyDataSetChanged();
-                                        //adapter.setTodoList(helper.getAllTasks());
-                                        Intent intent = new Intent(TaskDetailsActivity.this, MainActivity.class);
-                                        startActivity(intent);
+                                        Log.d(Integer.toString(taskId), "task ID");
+                                        helper.deleteTask(taskId);
+                                        TaskDetailsActivity.this.finish();
+                                        Toast.makeText(getBaseContext(), "Task deleted!", Toast.LENGTH_SHORT).show();
                                     }
                                 })
                         .setNegativeButton("No",
@@ -95,12 +96,12 @@ public class TaskDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TaskDetailsActivity.this, EditTaskActivity.class);
-                intent.putExtra("EXTRA_ID", id);
+                intent.putExtra("EXTRA_ID", taskId);
                 intent.putExtra("EXTRA_NAME", taskName);
                 intent.putExtra("EXTRA_DUE_DATE", dueDate);
                 intent.putExtra("EXTRA_STATUS", status);
                 intent.putExtra("EXTRA_NOTES", notes);
-                startActivity(intent);
+                startActivityForResult(intent,EDIT_REQUEST);
             }
         });
 
@@ -108,8 +109,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TaskDetailsActivity.this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(TaskDetailsActivity.this, MainActivity.class);
+//                startActivity(intent);
+                TaskDetailsActivity.this.finish();
             }
         });
 
@@ -119,7 +121,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
             dueDate = extras.getString("EXTRA_DUE_DATE");
             notes = extras.getString("EXTRA_NOTES");
             status = extras.getString("EXTRA_STATUS");
-            id = extras.getInt("EXTRA_ID");
+            taskId = extras.getInt("EXTRA_ID");
         }
 
         tvTaskName.setText(taskName);
@@ -132,9 +134,71 @@ public class TaskDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_delete){
             // dialog and then remove task from list
+            LayoutInflater li = LayoutInflater.from(context);
+            View view = li.inflate(R.layout.delete_dialog, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            // set prompts.xml to alertdialog builder
+            alertDialogBuilder.setView(view);
+
+            final TextView message = (TextView) view
+                    .findViewById(R.id.tvDeleteMessage);
+
+            // set dialog message
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    Log.d(Integer.toString(taskId), "task ID");
+                                    helper.deleteTask(taskId);
+                                    TaskDetailsActivity.this.finish();
+                                    Toast.makeText(getBaseContext(), "Task deleted!", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                    .setNegativeButton("No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
         } else if(item.getItemId() == R.id.action_edit) {
             // open edit task activity
+            Intent intent = new Intent(TaskDetailsActivity.this, EditTaskActivity.class);
+            intent.putExtra("EXTRA_ID", taskId);
+            intent.putExtra("EXTRA_NAME", taskName);
+            intent.putExtra("EXTRA_DUE_DATE", dueDate);
+            intent.putExtra("EXTRA_STATUS", status);
+            intent.putExtra("EXTRA_NOTES", notes);
+            startActivityForResult(intent,EDIT_REQUEST);
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //lets rebind the updated data
+        TodoTaskItems task = helper.getTask(taskId);
+        tvTaskName.setText(task.getTaskName());
+        tvDueDate.setText(task.getDueDate());
+        tvTaskNotes.setText(task.getTaskNotes());
+        tvStatus.setText(task.getStatus());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.details_menu, menu);
+        return true;
+    }
+
 }
