@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon"
+        android:icon="@drawable/icon"
         android:label="ToDonut"
         android:supportsRtl="true"
         android:theme="@style/ToDonutTheme">
