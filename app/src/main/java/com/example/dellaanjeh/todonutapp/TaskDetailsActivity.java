@@ -28,7 +28,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
     String taskName, dueDate, status, notes;
     DBHelper helper;
     TodoTaskListAdapter adapter;
-    TodoTaskItems item;
     ArrayList<TodoTaskItems> todoList;
     Integer taskId;
     final Context context = this;
@@ -68,7 +67,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_delete){
-            // dialog and then remove task from list
             LayoutInflater li = LayoutInflater.from(context);
             View view = li.inflate(R.layout.delete_dialog, null);
 
@@ -76,13 +74,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
             ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.ToDonutDialog);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctw);
 
-            // set prompts.xml to alertdialog builder
-           // alertDialogBuilder.setView(view);
-
             final TextView message = (TextView) view
                     .findViewById(R.id.tvDeleteMessage);
 
-            // set dialog message
             alertDialogBuilder
                     .setCancelable(false)
                     .setPositiveButton("Yes",
@@ -101,14 +95,10 @@ public class TaskDetailsActivity extends AppCompatActivity {
                                 }
                             });
 
-            // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.setTitle("Are you sure you want to delete this task?");
-
-            // show it
             alertDialog.show();
         } else if(item.getItemId() == R.id.action_edit) {
-            // open edit task activity
             Intent intent = new Intent(TaskDetailsActivity.this, EditTaskActivity.class);
             intent.putExtra("EXTRA_ID", taskId);
             intent.putExtra("EXTRA_NAME", taskName);
@@ -125,7 +115,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //lets rebind the updated data
         TodoTaskItems task = helper.getTask(taskId);
         tvTaskName.setText(task.getTaskName());
         tvDueDate.setText(task.getDueDate());

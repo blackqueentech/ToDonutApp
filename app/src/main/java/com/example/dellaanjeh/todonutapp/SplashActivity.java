@@ -12,15 +12,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 3000;
     TextView tvTitle, tvDonut;
-    ActionBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        // TODO: this code doesn't work somehow
-        //bar = getActionBar();
-//        bar.hide();
         tvDonut = (TextView) findViewById(R.id.tvDonut);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         Typeface sifonn = Typeface.createFromAsset(getAssets(), "fonts/SIFONN_BASIC.otf");
@@ -36,12 +32,8 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
                 Intent i = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(i);
-
-                // close this activity
                 finish();
             }
         }, SPLASH_TIME_OUT);

@@ -25,7 +25,6 @@ import java.util.Locale;
 
 public class EditTaskActivity extends AppCompatActivity {
 
-    SQLHandler handler;
     TextView tvTaskName, tvTaskNotes, tvStatus, tvDueDate;
     EditText etTaskName, etTaskNotes, etDueDate;
     String taskName, dueDate, status, notes;
@@ -50,7 +49,6 @@ public class EditTaskActivity extends AppCompatActivity {
             status = extras.getString("EXTRA_STATUS");
             id = extras.getInt("EXTRA_ID");
         }
-        //lvTodotasks = (ListView) mainView.findViewById(R.id.lvTodotasks);
         tvTaskName = (TextView) findViewById(R.id.tvTaskName);
         etTaskName = (EditText) findViewById(R.id.etTaskName);
         etTaskName.setText(taskName, TextView.BufferType.EDITABLE);
@@ -79,9 +77,6 @@ public class EditTaskActivity extends AppCompatActivity {
         etTaskNotes = (EditText) findViewById(R.id.etTaskNotes);
         etTaskNotes.setText(notes, TextView.BufferType.EDITABLE);
         tvStatus = (TextView) findViewById(R.id.tvStatus);
-        // TODO: figure out how to reference the material_spinner.xml from here
-        // https://android-arsenal.com/details/1/1720 - website for library
-        // spStatus = (MaterialSpinner) rootView.findViewById(R.id.spinner);
         spStatus = (Spinner) findViewById(R.id.spStatus);
         statuses = new String[]{"Not yet completed", "Completed"};
         statusAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, statuses);
@@ -112,19 +107,11 @@ public class EditTaskActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_save){
-            // dialog and then remove task from list
             String name = etTaskName.getText().toString();
             String notes = etTaskNotes.getText().toString();
             String status = String.valueOf(spStatus.getSelectedItem());
             String duedate = etDueDate.getText().toString();
             dbHelper.editTask(id,name, duedate, notes, status);
-//                Intent intent = new Intent(EditTaskActivity.this, TaskDetailsActivity.class);
-//                intent.putExtra("EXTRA_NAME", name);
-//                intent.putExtra("EXTRA_DUE_DATE", duedate);
-//                intent.putExtra("EXTRA_STATUS", status);
-//                intent.putExtra("EXTRA_NOTES", notes);
-//                startActivity(intent);
-            //use finish instead!
             setResult(Activity.RESULT_OK);
             EditTaskActivity.this.finish();
             Toast.makeText(getBaseContext(), "Task has been updated!", Toast.LENGTH_SHORT).show();

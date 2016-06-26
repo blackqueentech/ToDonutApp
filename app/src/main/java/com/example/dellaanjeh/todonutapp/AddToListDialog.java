@@ -28,7 +28,6 @@ import fr.ganfra.materialspinner.MaterialSpinner;
  */
 public class AddToListDialog extends DialogFragment {
 
-    SQLHandler handler;
     TextView tvTaskName, tvTaskNotes, tvStatus, tvDueDate;
     EditText etTaskName, etTaskNotes, etDueDate;
     Button btnAddTask;
@@ -39,17 +38,12 @@ public class AddToListDialog extends DialogFragment {
     DatePickerDialog dueDatePicker;
     SimpleDateFormat dateFormat;
     ArrayAdapter<String> statusAdapter;
-    ArrayList<TodoTaskItems> todoList;
-    TodoTaskListAdapter adapter;
-
-    //we need a listener for the add action!
     AddToListListener listener;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // can you inflate two different layouts in onCreateView?
         View rootView = inflater.inflate(R.layout.add_to_list_dialog, container,
                 false);
         View mainView = inflater.inflate(R.layout.activity_main, container, false);
@@ -64,7 +58,7 @@ public class AddToListDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                dueDatePicker = dueDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                dueDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -81,9 +75,6 @@ public class AddToListDialog extends DialogFragment {
         tvTaskNotes = (TextView) rootView.findViewById(R.id.tvTaskNotes);
         etTaskNotes = (EditText) rootView.findViewById(R.id.etTaskNotes);
         tvStatus = (TextView) rootView.findViewById(R.id.tvStatus);
-        // TODO: figure out how to reference the material_spinner.xml from here
-        // https://android-arsenal.com/details/1/1720 - website for library
-        // spStatus = (MaterialSpinner) rootView.findViewById(R.id.spinner);
         spStatus = (Spinner) rootView.findViewById(R.id.spStatus);
         statuses = new String[]{"Not yet completed", "Completed"};
         statusAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, statuses);
@@ -94,18 +85,14 @@ public class AddToListDialog extends DialogFragment {
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add to list
                 String name = etTaskName.getText().toString();
                 String notes = etTaskNotes.getText().toString();
                 String status = String.valueOf(spStatus.getSelectedItem());
                 String duedate = etDueDate.getText().toString();
                 addListenerOnSpinnerItemSelection();
                 dbHelper.addTask(name, duedate, notes, status);
-                //prompt the adapter to refresh
                 listener.onItemAdded();
                 AddToListDialog.this.dismiss();
-                // TODO: get list to update upon existing dialog
-                //adapter.notifyDataSetChanged();
             }
         });
         return rootView;
@@ -114,11 +101,9 @@ public class AddToListDialog extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //the listener is just the main activity
         listener = (MainActivity)getActivity();
     }
 
-    // I may not need this...
     public void addListenerOnSpinnerItemSelection(){
         spStatus.setOnItemSelectedListener(new CustomOnStatusSelectedListener());
     }

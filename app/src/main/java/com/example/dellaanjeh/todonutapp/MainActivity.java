@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View emptyView = findViewById(R.id.empty);
-        //set action bar title color
         lvTodotasks = (ListView) findViewById(R.id.lvTodotasks);
 
 
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
             }
         });
 
-        //set the empty view!
         ivSadFace = (ImageView) emptyView.findViewById(R.id.ivSadFace);
         tvEmptyList = (TextView) emptyView.findViewById(R.id.tvEmptyList);
         btnAddtoList = (Button) emptyView.findViewById(R.id.btnAddtoList);
@@ -100,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
 
     @Override
     public void onItemAdded() {
-        // created a setter to replace the list w all tasks since
-        // base adapter doesn't have a cursor to track changes with
         adapter.setTodoList(dh.getAllTasks());
         Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
     }

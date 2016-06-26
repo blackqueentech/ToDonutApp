@@ -57,8 +57,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(COLUMN3, dueDate);
         cv.put(COLUMN4, notes);
         cv.put(COLUMN5, status);
-
-        // could the null here be my issue? It may not be setting any IDs
         return db.insert(DATABASE_TABLE_NAME, null, cv);
     }
 
@@ -69,7 +67,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(COLUMN3, dueDate);
         cv.put(COLUMN4, notes);
         cv.put(COLUMN5, status);
-        // I'm scared of the nulls here too.
         return db.update(DATABASE_TABLE_NAME, cv, COLUMN1 + "=?", new String[]{id.toString()});
     }
 
@@ -127,8 +124,6 @@ public class DBHelper extends SQLiteOpenHelper {
         String string = String.valueOf(id);
         int delete = db.delete(DATABASE_TABLE_NAME, COLUMN1 + "=?", new String[]{string});
         Log.i("Q","Deleted " + delete);
-//        db.execSQL("DELETE FROM " + DATABASE_TABLE_NAME + " WHERE " + COLUMN1
-//                + "=" + string + "");
     }
 
 }
