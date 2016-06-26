@@ -13,13 +13,14 @@
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="10dp"
-        android:paddingTop="360dp">
+        android:paddingTop="380dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvDonut"
             android:text="Donut"
+            android:textStyle="bold"
             android:layout_weight="0.25"
             android:textColor="#ffffff"
             android:textSize="20dp"/>

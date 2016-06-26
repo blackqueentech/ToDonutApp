@@ -57,6 +57,8 @@ public class TodoTaskListAdapter extends BaseAdapter {
 
         if (item.getStatus().equals("Completed")) {
             tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
         return convertView;

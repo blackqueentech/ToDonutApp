@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,11 +41,9 @@ public class MainActivity extends AppCompatActivity implements AddToListDialog.A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View emptyView = inflater.inflate(R.layout.empty_list, null);
-
+        View emptyView = findViewById(R.id.empty);
+        //set action bar title color
         lvTodotasks = (ListView) findViewById(R.id.lvTodotasks);
-
 
 
         sqlHandler = new SQLHandler(this);
