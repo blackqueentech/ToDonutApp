@@ -35,7 +35,7 @@ The following **optional** features are implemented:
 Walkthrough
 -----------
 
-(media/demo.png)
+![Demo](media/demo.png)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
