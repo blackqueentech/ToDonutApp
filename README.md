@@ -47,10 +47,6 @@ make listeners out of the activities I was referencing, those were fixed. This a
 into Android so learning how to manipulate that was pretty nice. And I have never worked with material design as seriously as I did while
 building this project, so I'm glad for that. I know I have much more to learn though!
 
-Thanks
-------
-
-To Frank for his guidance and support. :)
 
 ## Creator
 [![Della Anjeh](http://2.gravatar.com/avatar/2e04cc55a63a10533fdc4b35904535ff)](https://github.com/deliandjam)
